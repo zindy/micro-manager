@@ -1,25 +1,22 @@
-///////////////////////////////////////////////////////////////////////////////
-//FILE:           SBSPlate.java
-//PROJECT:        Micro-Manager
-//SUBSYSTEM:      high content screening
-//-----------------------------------------------------------------------------
-
-//AUTHOR:         Nenad Amodaj, nenad@amodaj.com, 2008, 2013
-
-//COPYRIGHT:      UCSF, 100X Imaging Inc
-
-//LICENSE:        This file is distributed under the LGPL license.
-//                License text is included with the source distribution.
-
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-
-//Modified by Thomas Peterbauer to accomodate 6- and 12-well plates
+/*
+ * AUTHOR:
+ * Nenad Amodaj, nenad@amodaj.com, 2008, 2013
+ *
+ * Copyright (c)  Regents of the University of California 100X Imaging Inc
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package org.micromanager.hcs;
 

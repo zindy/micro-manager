@@ -1,13 +1,25 @@
-//-----------------------------------------------------------------------------
-// FILE:          Omicron.h
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Controls Omicron xX-laserseries modules through serial port
-// COPYRIGHT:     Omicron Laserage Laserprodukte GmbH, 2012
-// LICENSE:       LGPL
-// AUTHOR:        Jan-Erik Herche, Ralf Schlotter
-//-----------------------------------------------------------------------------
+/*
+ * Controls Omicron xX-laserseries modules through serial port
+ *
+ * AUTHOR:
+ * Jan-Erik Herche, Ralf Schlotter
+ * -----------------------------------------------------------------------------
+ *
+ * Copyright (c) 2012 Omicron Laserage Laserprodukte GmbH
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef _OMICRON_H_
 #define _OMICRON_H_

@@ -1,35 +1,26 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:       CSUX.h
-// PROJECT:    MicroManage
-// SUBSYSTEM:  DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:
-// Yokogawa CSUX adapter
-//
-// COPYRIGHT:     University of California, San Francisco, 2006
-//                All rights reserved
-//
-// LICENSE:       This library is free software; you can redistribute it and/or
-//                modify it under the terms of the GNU Lesser General Public
-//                License as published by the Free Software Foundation.
-//                
-//                You should have received a copy of the GNU Lesser General Public
-//                License along with the source distribution; if not, write to
-//                the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-//                Boston, MA  02111-1307  USA
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,                   
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.           
-//                                                                                     
-// AUTHOR: Nico Stuurman, 02/02/2007                                                 
-//                                                                                   
-// Based on NikonTE2000 controller adapter by Nenad Amodaj                           
-
+/*
+ * Yokogawa CSUX adapter
+ *
+ * AUTHOR:
+ * Nico Stuurman, 02/02/2007
+ * Based on NikonTE2000 controller adapter by Nenad Amodaj
+ *
+ * Copyright (c) 2006 Regents of the University of California
+ * All rights reserved
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef _CSUX_H_
 #define _CSUX_H_

@@ -1,35 +1,27 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          Piezosystem_NV120_1.cpp
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Piezosystem Jena device adapter.
-//						NV120/1CL is a 1 channel device which can control diffrent actuators.
-//						The actuator has a small memory with the values for the amplifier.//					
-//						The controller has USB(VCP) and RS232-interface.
-//					
-//                
-// AUTHOR:        Chris Belter, cbelter@piezojena.com 4/09/2013, ZStage and Shutter by Chris Belter
-//                
-//
-// COPYRIGHT:     Piezosystem Jena, Germany, 2013
-// LICENSE:       This library is free software; you can redistribute it and/or
-//                modify it under the terms of the GNU Lesser General Public
-//                License as published by the Free Software Foundation.
-//                
-//                You should have received a copy of the GNU Lesser General Public
-//                License along with the source distribution; if not, write to
-//                the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-//                Boston, MA  02111-1307  USA
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES. 
-//
+/*
+ * Piezosystem Jena device adapter.
+ * NV120/1CL is a 1 channel device which can control diffrent actuators.
+ * The actuator has a small memory with the values for the amplifier.//
+ * The controller has USB(VCP) and RS232-interface.
+ *
+ * AUTHOR:
+ * Chris Belter, cbelter@piezojena.com 4/09/2013, ZStage and Shutter by Chris Belter
+ *
+ * Copyright (c) 2013 Piezosystem Jena, Germany
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifdef WIN32
    #include <windows.h>

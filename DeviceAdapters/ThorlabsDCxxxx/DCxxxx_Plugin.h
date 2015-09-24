@@ -1,24 +1,34 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          DCxxxx.h
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Controls the Thorlabs DCxxxx LED driver series through a
-//						serial port. These devices are implemented as shutter devices,
-//						although they are illumination devices. This makes the
-//						synchronisation easier. So "Open" and "Close" means "On" or
-//						"Off". "Fire" does nothing at all. All other commands are
-//						realized as properties and differ from device to device.
-//						Supported devices are:
-//							+ DC2010 - universal LED driver	
-//							+ DC2100 - high power LED driver / both uses the DC2xxx class
-//							+ DC3100 - FLIM LED driver
-//							+ DC4100 - four channel LED driver
-//
-// COPYRIGHT:     Thorlabs GmbH
-// LICENSE:       LGPL
-// VERSION:			1.1.0
-// DATE:				06-Oct-2009
-// AUTHOR:        Olaf Wohlmann, owohlmann@thorlabs.com
-//
+/*
+ * Controls the Thorlabs DCxxxx LED driver series through a
+ * serial port. These devices are implemented as shutter devices,
+ * although they are illumination devices. This makes the
+ * synchronisation easier. So "Open" and "Close" means "On" or
+ * "Off". "Fire" does nothing at all. All other commands are
+ * realized as properties and differ from device to device.
+ * Supported devices are:
+ * + DC2010 - universal LED driver
+ * + DC2100 - high power LED driver / both uses the DC2xxx class
+ * + DC3100 - FLIM LED driver
+ * + DC4100 - four channel LED driver
+ *
+ * AUTHOR:
+ * Olaf Wohlmann, owohlmann@thorlabs.com
+ *
+ * Copyright (c)  Thorlabs GmbH
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef _DCxxxx_PLUGIN_H_
 #define _DCxxxx_PLUGIN_H_

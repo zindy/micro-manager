@@ -1,25 +1,34 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          Mightex.cpp
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Controls the Mightex Sirius LED Driver series through a
-//						serial or USB port. These devices are implemented as shutter devices,
-//						although they are illumination devices. This makes the
-//						synchronisation easier. So "Open" and "Close" means "On" or
-//						"Off". "Fire" does nothing at all. All other commands are
-//						realized as properties and differ from device to device.
-//						Supported devices are:
-//							+ Mightex Sirius SLC LED Driver(USB)
-//							+ Mightex Sirius SLC LED Driver(RS-232) (currently not supported)
-//							+ Mightex Sirius BLS Control Module(USB)
-//							+ Mightex Sirius BLS Control Module(RS-232) (currently not supported)
-//
-// COPYRIGHT:     Mightex
-// LICENSE:       LGPL
-// VERSION:			1.0.1
-// DATE:		2012-03-30
-// AUTHOR:        Yihui wu
-//
-
+/*
+ * Controls the Mightex Sirius LED Driver series through a
+ * serial or USB port. These devices are implemented as shutter devices,
+ * although they are illumination devices. This makes the
+ * synchronisation easier. So "Open" and "Close" means "On" or
+ * "Off". "Fire" does nothing at all. All other commands are
+ * realized as properties and differ from device to device.
+ * Supported devices are:
+ * + Mightex Sirius SLC LED Driver(USB)
+ * + Mightex Sirius SLC LED Driver(RS-232) (currently not supported)
+ * + Mightex Sirius BLS Control Module(USB)
+ * + Mightex Sirius BLS Control Module(RS-232) (currently not supported)
+ *
+ * AUTHOR:
+ * Yihui wu
+ *
+ * Copyright (c)  Mightex
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <windows.h>
 #include "Mightex.h"

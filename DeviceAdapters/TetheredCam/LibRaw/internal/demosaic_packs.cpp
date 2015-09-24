@@ -1,5 +1,5 @@
 /* 
-  Copyright 2008-2010 LibRaw LLC (info@libraw.org)
+  Copyright (c) 2008-2010 LibRaw LLC (info@libraw.org)
 
 LibRaw is free software; you can redistribute it and/or modify
 it under the terms of the one of three licenses as you choose:

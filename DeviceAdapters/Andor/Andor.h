@@ -1,41 +1,52 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          Andor.h
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Andor camera module 
-//                
-// AUTHOR:        Nenad Amodaj, nenad@amodaj.com, 06/30/2006
-// COPYRIGHT:     University of California, San Francisco, 2006
-//                100X Imaging Inc, 2008
-//
-// LICENSE:       This file is distributed under the BSD license.
-//                License text is included with the source distribution.
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-//
-// REVISIONS:     May 21, 2007, Jizhen Zhao, Andor Technologies
-//                Temerature control and other additional related properties added,
-//                gain bug fixed, refernce counting fixed for shutter adapter.
-//
-//				  May 23 & 24, 2007, Daigang Wen, Andor Technology plc added/modified:
-//				  Cooler is turned on at startup and turned off at shutdown
-//				  Cooler control is changed to cooler mode control
-//				  Pre-Amp-Gain property is added
-//				  Temperature Setpoint property is added
-//				  Temperature is resumed as readonly
-//				  EMGainRangeMax and EMGainRangeMin are added
-//
-// FUTURE DEVELOPMENT: From September 1 2007, the development of this adaptor is taken over by Andor Technology plc. Daigang Wen (d.wen@andor.com) is the main contact. Changes made by him will not be labeled.
-//
-// CVS:           $Id$
-//
+/*
+ * Andor camera module
+ *
+ * AUTHOR:
+ * Nenad Amodaj, nenad@amodaj.com, 06/30/2006
+ * Daigang Wen (d.wen@andor.com), Sep. 2007
+ *
+ * REVISIONS:     May 21, 2007, Jizhen Zhao, Andor Technologies
+ *                Temerature control and other additional related properties added,
+ *                gain bug fixed, refernce counting fixed for shutter adapter.
+ *
+ *                               May 23 & 24, 2007, Daigang Wen, Andor Technology plc added/modified:
+ *                               Cooler is turned on at startup and turned off at shutdown
+ *                               Cooler control is changed to cooler mode control
+ *                               Pre-Amp-Gain property is added
+ *                               Temperature Setpoint property is added
+ *                               Temperature is resumed as readonly
+ *                               EMGainRangeMax and EMGainRangeMin are added
+ *
+ * Copyright (c) 2006 Regents of the University of California
+ * Copyright (c) 2008 100X Imaging Inc
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
 #ifndef _ANDOR_H_
 #define _ANDOR_H_
 

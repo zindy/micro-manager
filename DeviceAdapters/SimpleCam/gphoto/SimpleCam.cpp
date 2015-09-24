@@ -1,25 +1,24 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          SimpleCam.cpp
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Camera driver for gphoto2 cameras.
-//                
-// AUTHOR:        Koen De Vleeschauwer, www.kdvelectronics.eu, 2011
-//
-// COPYRIGHT:     (c) 2010, Koen De Vleeschauwer, www.kdvelectronics.eu
-//
-// LICENSE:       This file is distributed under the LGPL license.
-//                License text is included with the source distribution.
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-//
+/*
+ * Camera driver for gphoto2 cameras.
+ *
+ * AUTHOR:
+ * Koen De Vleeschauwer, www.kdvelectronics.eu, 2011
+ *
+ * Copyright (c) 2010 Koen De Vleeschauwer, www.kdvelectronics.eu
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "SimpleCam.h"
 #include <fcntl.h>

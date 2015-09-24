@@ -1,18 +1,24 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          pgFocus.h
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Focus stability
-// COPYRIGHT:     University of Massachusetts Medical School, Worcester, MA 2014
-//
-//
-//
-// LICENSE:       LGPL
-//
-// AUTHOR:        Karl Bellve
-// MAINTAINER     Karl Bellve Karl.Bellve@umassmed.edu
-//
+/*
+ * Focus stability
+ *
+ * AUTHOR:
+ * Karl Bellve Karl.Bellve@umassmed.edu
+ *
+ * Copyright (c) 2014 University of Massachusetts Medical School, Worcester, MA
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef _PGFOCUS_H_
 #define _PGFOCUS_H_

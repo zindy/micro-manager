@@ -1,30 +1,29 @@
-// Olympus MT20 Device Adapter
-//
-// Copyright 2010 
-// Michael Mitchell
-// mich.r.mitchell@gmail.com
-//
-// Last modified 27.7.10
-//
-//
-// This file is part of the Olympus MT20 Device Adapter.
-//
-// This device adapter requires the Real-Time Controller board that came in the original
-// Cell^R/Scan^R/Cell^M/etc. computer to work. It uses TinyXML ( http://www.grinninglizard.com/tinyxml/ )
-// to parse XML messages from the device.
-//
-// The Olympus MT20 Device Adapter is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// any later version.
-//
-// The Olympus MT20 Device Adapter is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public License
-// along with the Olympus MT20 Device Adapter.  If not, see <http://www.gnu.org/licenses/>.
+/*
+ * AUTHOR:
+ * Michael Mitchell (mich.r.mitchell@gmail.com)
+ *
+ * Copyright (c) 2010 Michael Mitchell
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * NOTE:
+ * This device adapter requires the Real-Time Controller board that came in the original
+ * Cell^R/Scan^R/Cell^M/etc. computer to work. It uses TinyXML ( http://www.grinninglizard.com/tinyxml/ )
+ * to parse XML messages from the device.
+ */
 
 #ifndef MSG_LIB_H_
 #define MSG_LIB_H_

@@ -1,29 +1,30 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          USBManager.cpp
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   General interface to USB devices
-//
-// COPYRIGHT:     University of California, San Francisco, 2007
-//
-// LICENSE:       This file is distributed under the "Lesser GPL" (LGPL) license.
-//                License text is included with the source distribution.
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-//
-// NOTE:          Uses libusb 0.1.12
-//                http://libusb.sourceforge.net/ 
-//                
-// AUTHOR:        Nico Stuurman, Dec. 2007
-//
-//
+/*
+ * General interface to USB devices
+ *
+ * AUTHOR:
+ * Nico Stuurman, Dec. 2007
+ *
+ * Copyright (c) 2007 Regents of the University of California
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * NOTES:
+ *            Uses libusb 0.1.12
+ *                 http://libusb.sourceforge.net/ 
+ */
 
 #ifndef _std_iostream_INCLUDED_
 #include <iostream>

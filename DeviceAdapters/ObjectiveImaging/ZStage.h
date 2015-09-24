@@ -1,29 +1,40 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          ZStage.h
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Oasis Controller / ZStage (Objective Imaging)
-//
-// AUTHOR:        Egor Zindy, egor.zindy@manchester.ac.uk
-//                mostly based on ZStage.h from NiMotionControl by
-//                Brian Ashcroft, ashcroft@leidenuniv.nl
-//
-// COPYRIGHT:     University of Manchester, 2014 (ZStage.h)
-//                Leiden University, Leiden, 2009 (ZStage.h)
-//
-// LICENSE:       This file is distributed under the BSD license.
-//                License text is included with the source distribution.
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-//
-// vim: set autoindent tabstop=3 softtabstop=3 shiftwidth=3 expandtab textwidth=78:
+/*
+ * Oasis Controller / ZStage (Objective Imaging)
+ *
+ * AUTHOR:
+ * Egor Zindy, egor.zindy@manchester.ac.uk
+ * mostly based on ZStage.h from NiMotionControl by
+ * Brian Ashcroft, ashcroft@leidenuniv.nl
+ *
+ * Copyright (c) 2014 University of Manchester,  (ZStage.h)
+ * Copyright (c) 2009 Leiden University, Leiden,  (ZStage.h)
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #ifndef _NIZStage_H_
 #define _NIZStage_H_

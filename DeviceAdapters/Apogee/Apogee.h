@@ -1,25 +1,25 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          Apogee.h
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Apogee camera module
-//                
-// AUTHOR:        Bob Dougherty <bob@vischeck.com> 
-// COPYRIGHT:     Bob Dougherty and Apogee Instruments, California, 2008
-// LICENSE:       This file is distributed under the LGPL license.
-//                License text is included with the source distribution.
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-//
-// CVS:           $Id: $
-//
+/*
+ * Apogee camera module
+ *
+ * AUTHOR:
+ * Bob Dougherty <bob@vischeck.com>
+ *
+ * Copyright (c) 2008 Bob Dougherty and Apogee Instruments, California
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef _APOGEE_H_
 #define _APOGEE_H_
 

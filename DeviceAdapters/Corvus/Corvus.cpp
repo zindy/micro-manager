@@ -1,34 +1,26 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          Corvus.cpp
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   ITK Corvus Controller Driver
-//                XY Stage
-//                Z  Stage
-//
-// AUTHOR:        Johan Henriksson, mahogny@areta.org, derived from Märzhauser adapter
-// COPYRIGHT:     Johan Henriksson, 2010
-// LICENSE:       This library is free software; you can redistribute it and/or
-//                modify it under the terms of the GNU Lesser General Public
-//                License as published by the Free Software Foundation.
-//                
-//                You should have received a copy of the GNU Lesser General Public
-//                License along with the source distribution; if not, write to
-//                the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-//                Boston, MA  02111-1307  USA
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.  
-//
-
-// Precision: 15.26 nm in programming mode, 23.7 fm in joystick mode
-   //The command "identify" can be used to detect if it is a corvus device
+/*
+ * ITK Corvus Controller Driver
+ * XY Stage
+ * Z  Stage
+ *
+ * AUTHOR:
+ * Johan Henriksson, mahogny@areta.org, derived from Märzhauser adapter
+ *
+ * Copyright (c) 2010 Johan Henriksson
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 // Command "st" can check for machine error
 // Command "ge" can be used to check after setaxis if Z axis exists - it will return 1003 and 1 3 setaxis will fail.
@@ -36,7 +28,6 @@
 // two consecutive moves will block each other, not accumulate
 
 // "st" gives 8bit value. bit 0 tells if ready to execute; busy if "1"
-
 
 #ifdef WIN32
 //   #include <windows.h>

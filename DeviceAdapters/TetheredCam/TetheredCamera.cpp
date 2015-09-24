@@ -1,27 +1,39 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          TetheredCamera.cpp
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Camera driver for Canon and Nikon cameras using 
-//                DSLRRemote, NKRemote, or PSRemote tethering software.
-//                
-// AUTHOR:        Koen De Vleeschauwer, www.kdvelectronics.eu, 2010
-//
-// COPYRIGHT:     (c) 2010, Koen De Vleeschauwer, www.kdvelectronics.eu
-//                (c) 2007, Regents of the University of California
-//
-// LICENSE:       This file is distributed under the BSD license.
-//                License text is included with the source distribution.
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-//
+/*
+ * Camera driver for Canon and Nikon cameras using
+ * DSLRRemote, NKRemote, or PSRemote tethering software.
+ *
+ * AUTHOR:
+ * Koen De Vleeschauwer, www.kdvelectronics.eu, 2010
+ *
+ * Copyright (c) 2010 (c) , Koen De Vleeschauwer, www.kdvelectronics.eu
+ * Copyright (c) 2007 (c) , Regents of the University of California
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
 
 // Compilation:
 //
@@ -29,15 +41,15 @@
 // Project -> Properties -> Linker -> Input -> Additional Dependencies: windowscodecs.lib
 // 
 // For Canon DSLR:
-// Project -> Properties -> Configuration Properties -> C/C++ -> Preprocessor -> Preprocessor Definitions: add _DSLRREMOTE_
+// Project -> Properties -> Configuration Properties -> C/C++ -> Preprocessor -> Preprocessor Definitions: add _
 // Include library DSLRRemoteLib.lib in project
 //
 // For Canon Powershot:
-// Project -> Properties -> Configuration Properties -> C/C++ -> Preprocessor -> Preprocessor Definitions: add _PSREMOTE_
+// Project -> Properties -> Configuration Properties -> C/C++ -> Preprocessor -> Preprocessor Definitions: add _
 // Include library PSRemoteLib.lib in project
 //
 // For Nikon:
-// Project -> Properties -> Configuration Properties -> C/C++ -> Preprocessor -> Preprocessor Definitions: add _NKREMOTE_
+// Project -> Properties -> Configuration Properties -> C/C++ -> Preprocessor -> Preprocessor Definitions: add _
 // Include library NKRemoteLib.lib in project
 //
 
@@ -45,11 +57,11 @@
 //
 // - Connect a Canon DSLR camera.
 // - Download, install and configure DSLRRemote from www.breezesys.com. Demo version is sufficient.
-// - Start up DSLRRemote. Click on the "Release" button to take a picture. Check the picture is downloaded to the PC, and displayed in the DSLRRemote main window. 
+// - Start up DSLRRemote. Click on the "Release" button to take a picture. Check the picture is downloaded to th
 // - With DSLRRemote still running, start up Micro-Manager. 
 // - Create a hardware config consisting of DSLRRemoteCam, Demo Shutter, and Demo Stage.
 // - Open the property browser, and select ImageDecoder "Micro-Manager".
-// - Click the micro-manager "Snap" button to take a picture. Check the picture appears in the micro-manager "Live" window.
+// - Click the micro-manager "Snap" button to take a picture. Check the picture appears in the micro-manager "Li
 // - If the camera supports jpeg and raw, take pictures in both formats. 
 // - Alternatively test using a Nikon DSLR camera, NKRemote software and NKRemoteCam driver.
 //
@@ -83,10 +95,10 @@
 
 //
 // Note:
-// With hindsight, Windows Imaging Component could have been replaced with os-independent open source libraries (e.g. freeimage), and the driver split in two:
+// With hindsight, Windows Imaging Component could have been replaced with os-independent open source libraries 
 // - an operating system and camera independent part, common to all
-// - an operating system and camera dependent part, which has a single method: take a picture and return the filename of the picture.
-//    
+// - an operating system and camera dependent part, which has a single method: take a picture and return the fil
+
 
 #ifndef _DSLRREMOTE_
 #ifndef _NKREMOTE_

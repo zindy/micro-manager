@@ -1,24 +1,25 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          Configuration.h
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     MMCore
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   Set of properties defined as a high level command
-// AUTHOR:        Nenad Amodaj, nenad@amodaj.com, 09/08/2005
-// COPYRIGHT:     University of California, San Francisco, 2006
-//
-// LICENSE:       This file is distributed under the "Lesser GPL" (LGPL) license.
-//                License text is included with the source distribution.
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-// CVS:           $Id$
-//
+/*
+ * Set of properties defined as a high level command
+ *
+ * AUTHOR:
+ * Nenad Amodaj, nenad@amodaj.com, 09/08/2005
+ *
+ * Copyright (c) 2006 Regents of the University of California
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef _CONFIGURATION_H_
 #define _CONFIGURATION_H_
 

@@ -1,40 +1,37 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          MMCore.h
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     MMCore
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   The interface to the MM core services. 
-//              
-// COPYRIGHT:     University of California, San Francisco, 2006-2014
-//                100X Imaging Inc, www.100ximaging.com, 2008
-//
-// LICENSE:       This library is free software; you can redistribute it and/or
-//                modify it under the terms of the GNU Lesser General Public
-//                License as published by the Free Software Foundation.
-//                
-//                You should have received a copy of the GNU Lesser General Public
-//                License along with the source distribution; if not, write to
-//                the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-//                Boston, MA  02111-1307  USA
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-//
-// AUTHOR:        Nenad Amodaj, nenad@amodaj.com, 06/07/2005
-//
-// NOTES:         Public methods follow a slightly different naming convention than
-//                the rest of the C++ code, i.e we have:
-//                   getConfiguration();
-//                instead of:
-//                   GetConfiguration();
-//                The alternative (lowercase function names) convention is used
-//                because public method names appear as wrapped methods in other
-//                languages, in particular Java.
+/*
+ * The interface to the MM core services.
+ *
+ * AUTHOR:
+ * Nenad Amodaj, nenad@amodaj.com, 06/07/2005
+ *
+ * Copyright (c) 2006-2014 Regents of the University of California
+ * Copyright (c) 2008 100X Imaging Inc, www.100ximaging.com
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * NOTES:
+ *           Public methods follow a slightly different naming convention than
+ *                 the rest of the C++ code, i.e we have:
+ *                    getConfiguration();
+ *                 instead of:
+ *                    GetConfiguration();
+ *                 The alternative (lowercase function names) convention is used
+ *                 because public method names appear as wrapped methods in other
+ *                 languages, in particular Java.
+ */
 
 /*
  * Important! Read this before changing this file.

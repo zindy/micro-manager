@@ -1,27 +1,27 @@
-///////////////////////////////////////////////////////////////////////////////
-// FILE:          Brent.h
-// PROJECT:       Micro-Manager
-// SUBSYSTEM:     DeviceAdapters
-//-----------------------------------------------------------------------------
-// DESCRIPTION:   all implemementation of John Burkardt's Brent moved into a header file
-//                so that the functions can easily be made into member functions of the enclosing class --
-//                enclosing class just defines a private function "DoubleFunctionOfDouble"
-//                of course this does duplicate the machine code into each class, but it's pretty small
-//
-// AUTHOR:        Karl Hoover, UCSF
-//
-// COPYRIGHT:     University of California, San Francisco, 2010
-// LICENSE:       This file is distributed under the LGPL license.
-//                License text is included with the source distribution.
-//
-//                This file is distributed in the hope that it will be useful,
-//                but WITHOUT ANY WARRANTY; without even the implied warranty
-//                of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-//
-//                IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-//                CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
-// CVS:           $Id: DemoCamera.cpp 4190 2010-03-12 23:09:06Z karlh $
+/*
+ * all implemementation of John Burkardt's Brent moved into a header file
+ * so that the functions can easily be made into member functions of the enclosing class --
+ * enclosing class just defines a private function "DoubleFunctionOfDouble"
+ * of course this does duplicate the machine code into each class, but it's pretty small
+ *
+ * AUTHOR:
+ * Karl Hoover, UCSF
+ *
+ * Copyright (c) 2010 Regents of the University of California
+ *
+ * This is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef  BRENT_H_IMPLEMENTATION
 #define BRENT_H_IMPLEMENTATION

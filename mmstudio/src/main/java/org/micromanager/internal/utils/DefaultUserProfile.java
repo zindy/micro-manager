@@ -675,7 +675,6 @@ public class DefaultUserProfile implements UserProfile {
       if (!isFirstProfile) {
          // Update a few things that have already pulled values from the
          // default user profile by the time this has happened.
-         DaytimeNighttime.setMode(DaytimeNighttime.getBackgroundMode());
          MMStudio.getInstance().getFrame().resetPosition();
       }
    }

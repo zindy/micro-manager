@@ -36,12 +36,15 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableColumn;
+import java.util.Timer;
+import java.util.TimerTask;
 import mmcorej.CMMCore;
 import mmcorej.StrVector;
 import net.miginfocom.swing.MigLayout;
@@ -60,6 +63,7 @@ import org.micromanager.internal.utils.PropertyValueCellRenderer;
 import org.micromanager.internal.utils.ReportingUtils;
 import org.micromanager.internal.utils.ShowFlags;
 import org.micromanager.internal.utils.ShowFlagsPanel;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * JFrame based component for generic manipulation of device properties.
@@ -85,6 +89,9 @@ public final class PropertyEditor extends MMFrame {
    private JScrollPane scrollPane_;
    private Studio studio_;
    private CMMCore core_;
+   private Timer timer_;
+   private boolean timerRunning; // whether we are set to update properties currently
+   private final AtomicBoolean updatingNow_ = new AtomicBoolean(false);  // true iff in middle of update right now, use to skip updates if last one is running instead of letting them pile up
 
    public PropertyEditor(Studio studio) {
       super("property editor");
@@ -98,6 +105,9 @@ public final class PropertyEditor extends MMFrame {
 
       createTable();
       createComponents();
+
+      timerRunning = false;
+      timer_ = null;
    }
 
    private void createTable() {
@@ -170,14 +180,20 @@ public final class PropertyEditor extends MMFrame {
       data_.setShowReadOnly(showReadonlyCheckBox_.isSelected());
       add(showReadonlyCheckBox_);
 
-      final JButton refreshButton = new JButton("Refresh",
+      final JToggleButton refreshButton = new JToggleButton("Refresh",
             new ImageIcon(getClass().getResource(
               "/org/micromanager/icons/arrow_refresh.png")));
       refreshButton.setFont(defaultFont);
       refreshButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            refresh();
+            
+            if (timerRunning == false) {
+               startAutorefresh();
+            } else {
+               stopAutorefresh();
+            }
+            //refresh();
          }
       });
       add(refreshButton, "width 100!, alignx left, aligny top, gaptop 20, gapbottom push, wrap");
@@ -190,10 +206,37 @@ public final class PropertyEditor extends MMFrame {
    }
 
    protected void refresh() {
-      data_.gui_ = studio_;
-      data_.flags_ = flags_;
-      data_.showUnused_ = true;
-      data_.refresh(false);
+      if (!updatingNow_.get()) {
+         updatingNow_.set(true);
+         data_.gui_ = studio_;
+         data_.flags_ = flags_;
+         data_.showUnused_ = true;
+         data_.refresh(false);
+         updatingNow_.set(false);
+      }
+   }
+
+
+   public void stopAutorefresh() {
+      if (timer_ != null) {
+         timer_.cancel();
+      }
+      timerRunning = false;
+   }
+
+   public void startAutorefresh() {
+      // end any existing updater before starting (anew)
+      if (timer_ != null) {
+         timer_.cancel();
+      }
+      timer_ = new Timer(true);
+      timer_.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+               refresh();
+            }
+          }, 0, 200);
+      timerRunning = true;
    }
 
    @Subscribe

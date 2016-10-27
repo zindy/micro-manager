@@ -26,6 +26,7 @@
 #include "../../MMDevice/MMDevice.h"
 #include "../../MMDevice/DeviceBase.h"
 #include "../../MMDevice/DeviceUtils.h"
+#include "../../MMDevice/DeviceThreads.h"
 #include <string>
 //#include <iostream>
 #include <vector>
@@ -41,11 +42,14 @@ enum TriggerType {OFF, RISING_EDGES, FALLING_EDGES, BOTH_EDGES, FOLLOW_PULSE};
 string TriggerLabels[] = {"Off","RisingEdges","FallingEdges","BothEdges","FollowPulse"};
 char TriggerCmd[] = {'Z', '+', '-', '*', 'X'};
 
+
 class Controller : public CShutterBase<Controller>
 {
 public:
    Controller(const char* name);
    ~Controller();
+
+   friend class PollingThread;
   
    // MMDevice API
    // ------------
@@ -75,6 +79,19 @@ public:
    int GetOpen(bool& open);
    int Fire(double deltaT);
 
+   static MMThreadLock& GetLock() {return lock_;}
+
+
+protected:
+   char currentChannelLetter_;
+   string currentChannelLabel_;
+   long currentChannel_;
+   vector<char> channelLetters_;
+   vector<string> channelLabels_;
+
+   int ReadChannelLabels();
+   void GetIntensity(long& intensity, long index);
+   void GetState(long &state);
 
 private:
 
@@ -87,9 +104,6 @@ private:
    MM::MMTime changedTime_;
 
    std::string port_;
-   char currentChannelLetter_;
-   string currentChannelLabel_;
-   long currentChannel_;
    unsigned char buf_[1000];
    string buf_string_;
    vector<string> buf_tokens_;
@@ -98,24 +112,21 @@ private:
    TriggerType triggerMode_;
 
    double answerTimeoutMs_;
-   vector<char> channelLetters_;
-   vector<string> channelLabels_;
    string triggerSequence_;
    string triggerMessage_;
    string trigger_;
 
+   static MMThreadLock lock_;
+   PollingThread* mThread_;
 
    void SetIntensity(long intensity, long index);
-   void GetIntensity(long& intensity, long index);
    void ReadGreeting();
-   int ReadChannelLabels();
    void GeneratePropertyIntensity();
    void GenerateChannelChooser();
    void GeneratePropertyTrigger();
    void GeneratePropertyTriggerSequence();
    void GeneratePropertyState();
    void SetState(long state);
-   void GetState(long &state);
    void Illuminate();
    void SetTrigger();
    void StripString(string& StringToModify);
@@ -127,6 +138,30 @@ private:
 
    Controller& operator=(Controller& /*rhs*/) {assert(false); return *this;}
 };
+
+class PollingThread: public MMDeviceThreadBase
+{
+   public:
+      PollingThread(Controller& aController);
+     ~PollingThread();
+      int svc();
+      int open (void*) { return 0;}
+      int close(unsigned long) {return 0;}
+
+      void Start();
+      void Stop() {stop_ = true;}
+      PollingThread & operator=( const PollingThread & ) 
+      {
+         return *this;
+      }
+
+
+   private:
+      long state_;
+      Controller& aController_;
+      bool stop_;
+};
+
 
 
 #endif // _PRECISEXCITE_H_

@@ -43,8 +43,12 @@ const char* g_ControllerName = "PrecisExcite";
 const char* g_Keyword_Intensity = "Intensity";
 const char* g_Keyword_Trigger = "Trigger";
 const char* g_Keyword_Trigger_Sequence = "TriggerSequence";
+const char* g_Keyword_ChannelLabel = "ChannelLabel";
 const char * carriage_return = "\r";
 const char * line_feed = "\n";
+
+// static lock
+MMThreadLock Controller::lock_;
 
 
 
@@ -87,7 +91,8 @@ Controller::Controller(const char* name) :
    name_(name), 
    busy_(false),
    error_(0),
-   changedTime_(0.0)
+   changedTime_(0.0),
+   mThread_(0)
 {
    assert(strlen(name) < (unsigned int) MM::MaxStrLength);
 
@@ -160,6 +165,9 @@ int Controller::Initialize()
    GeneratePropertyTriggerSequence();
    GetState(state_);
    
+   mThread_ = new PollingThread(*this);
+   mThread_->Start();
+
    initialized_ = true;
    return HandleErrors();
 
@@ -167,6 +175,7 @@ int Controller::Initialize()
 
 void Controller::ReadGreeting()
 {
+   MMThreadGuard myLock(lock_);
    do {
       ReceiveOneLine();
    } while (! buf_string_.empty());
@@ -177,13 +186,16 @@ int Controller::ReadChannelLabels()
    buf_tokens_.clear();
    string label;
 
-   Purge();
-   Send("LAMS");
-   do {
-      ReceiveOneLine();
-      buf_tokens_.push_back(buf_string_);
+   {
+      MMThreadGuard myLock(lock_);
+      Purge();
+      Send("LAMS");
+      do {
+         ReceiveOneLine();
+         buf_tokens_.push_back(buf_string_);
+      }
+         while(! buf_string_.empty());
    }
-      while(! buf_string_.empty());
    
    for (unsigned int i=0;i<buf_tokens_.size();i++)
    {
@@ -242,10 +254,10 @@ void Controller::GenerateChannelChooser()
    if (! channelLabels_.empty()) {   
       CPropertyAction* pAct;
       pAct = new CPropertyAction (this, &Controller::OnChannelLabel);
-      CreateProperty("ChannelLabel", channelLabels_[0].c_str(), MM::String, false, pAct);
+      CreateProperty(g_Keyword_ChannelLabel, channelLabels_[0].c_str(), MM::String, false, pAct);
 
-      SetAllowedValues("ChannelLabel",channelLabels_);
-      SetProperty("ChannelLabel",channelLabels_[0].c_str());
+      SetAllowedValues(g_Keyword_ChannelLabel, channelLabels_);
+      SetProperty(g_Keyword_ChannelLabel, channelLabels_[0].c_str());
             
    }
 }
@@ -271,6 +283,7 @@ int Controller::Shutdown()
    if (initialized_)
    {
       initialized_ = false;
+      delete(mThread_);
    }
    return HandleErrors();
 }
@@ -448,6 +461,7 @@ int Controller::OnTriggerSequence(MM::PropertyBase* pProp, MM::ActionType eAct)
 void Controller::SetTrigger()
 {
    stringstream msg;
+
    msg << "SQX" << carriage_return;
 
    for (unsigned int i=0;i<triggerSequence_.size();i++)
@@ -464,6 +478,7 @@ void Controller::SetTrigger()
 void Controller::Illuminate()
 {
    stringstream msg;
+
    if (state_==0)
    {
       if (triggerMode_ == OFF || triggerMode_ == FOLLOW_PULSE)
@@ -490,6 +505,7 @@ void Controller::Illuminate()
          msg << triggerMessage_ << "SQ" << TriggerCmd[triggerMode_];
    }
             
+   MMThreadGuard myLock(lock_);
    Send(msg.str());
 }
 
@@ -497,10 +513,13 @@ void Controller::SetIntensity(long intensity, long index)
 {
    stringstream msg;
    msg << "C" << channelLetters_[index] << "I" << intensity;
-   Purge();
-   Send(msg.str());
-   ReceiveOneLine();
 
+   {
+      MMThreadGuard myLock(lock_);
+      Purge();
+      Send(msg.str());
+      ReceiveOneLine();
+   }
 }
 
 void Controller::GetIntensity(long& intensity, long index)
@@ -508,9 +527,13 @@ void Controller::GetIntensity(long& intensity, long index)
    stringstream msg;
    string ans;
    msg << "C" << channelLetters_[index] << "?";
-   Purge();
-   Send(msg.str());
-   ReceiveOneLine();
+
+   {
+      MMThreadGuard myLock(lock_);
+      Purge();
+      Send(msg.str());
+      ReceiveOneLine();
+   }
 
    if (! buf_string_.empty())
       if (0 == buf_string_.compare(0,2,msg.str(),0,2))
@@ -533,22 +556,25 @@ void Controller::SetState(long state)
 void Controller::GetState(long &state)
 {
    if (triggerMode_ == OFF) {
-      Purge();
-      Send("C?");
-      long stateTmp = 0;
-
-      for (unsigned int i=0;i<channelLetters_.size();i++)
+      MMThreadGuard myLock(lock_);
       {
-         ReceiveOneLine();
+         Purge();
+         Send("C?");
+         long stateTmp = 0;
 
-         if (! buf_string_.empty())
-            if (buf_string_[5]=='N') {
-               stateTmp = 1;
-               currentChannel_ = i;
-               break;
-            }
+         for (unsigned int i=0;i<channelLetters_.size();i++)
+         {
+            ReceiveOneLine();
+
+            if (! buf_string_.empty())
+               if (buf_string_[5]=='N') {
+                  stateTmp = 1;
+                  currentChannel_ = i;
+                  break;
+               }
+         }
+         state = stateTmp;
       }
-      state = stateTmp;
    }
    else
       state = state_;
@@ -621,3 +647,49 @@ int Controller::Fire(double deltaT)
    error_ = DEVICE_UNSUPPORTED_COMMAND;
    return HandleErrors();
 }
+
+PollingThread::PollingThread(Controller& aController) :
+   state_(0),
+   aController_(aController)
+{
+}
+
+PollingThread::~PollingThread()
+{
+   Stop();
+   wait();
+}
+
+int PollingThread::svc() 
+{
+   while (!stop_)
+   {
+      if (aController_.initialized_) {
+          int ret = DEVICE_OK;
+          long state;
+          aController_.GetState(state);
+
+          if (state == 1) {
+              ret = aController_.ReadChannelLabels();
+              aController_.OnPropertyChanged(g_Keyword_ChannelLabel, aController_.channelLabels_[aController_.currentChannel_].c_str());
+          }
+
+          if (ret != DEVICE_OK)
+          {
+             stop_ = true;
+             return ret;
+          }
+      }
+
+      CDeviceUtils::SleepMs(500);
+   }
+   return DEVICE_OK;
+}
+
+
+void PollingThread::Start()
+{
+   stop_ = false;
+   activate();
+}
+

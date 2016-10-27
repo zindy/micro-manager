@@ -185,16 +185,22 @@ int Controller::ReadChannelLabels()
 {
    buf_tokens_.clear();
    string label;
+   unsigned int nChannels;
 
    {
       MMThreadGuard myLock(lock_);
       Purge();
+
+      //Using CSS, there is no need to timeout the receive operation
+      Send("CSS?");
+      ReceiveOneLine();
+      nChannels = (buf_string_.length()-3)/6;
+
       Send("LAMS");
-      do {
+      for (unsigned int i=0;i<nChannels;i++) {
          ReceiveOneLine();
          buf_tokens_.push_back(buf_string_);
       }
-         while(! buf_string_.empty());
    }
    
    for (unsigned int i=0;i<buf_tokens_.size();i++)
@@ -662,24 +668,11 @@ PollingThread::~PollingThread()
 
 int PollingThread::svc() 
 {
+   long state;
    while (!stop_)
    {
-      if (aController_.initialized_) {
-          int ret = DEVICE_OK;
-          long state;
-          aController_.GetState(state);
-
-          if (state == 1) {
-              ret = aController_.ReadChannelLabels();
-              aController_.OnPropertyChanged(g_Keyword_ChannelLabel, aController_.channelLabels_[aController_.currentChannel_].c_str());
-          }
-
-          if (ret != DEVICE_OK)
-          {
-             stop_ = true;
-             return ret;
-          }
-      }
+      aController_.GetState(state);
+      aController_.OnPropertyChanged(g_Keyword_ChannelLabel, aController_.channelLabels_[aController_.currentChannel_].c_str());
 
       CDeviceUtils::SleepMs(500);
    }

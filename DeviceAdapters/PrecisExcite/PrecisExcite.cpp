@@ -562,22 +562,32 @@ void Controller::SetState(long state)
 void Controller::GetState(long &state)
 {
    if (triggerMode_ == OFF) {
+      unsigned int nChannels;
       MMThreadGuard myLock(lock_);
       {
          Purge();
-         Send("C?");
+         Send("CSS?");
+         ReceiveOneLine();
+         nChannels = (buf_string_.length()-3)/6;
+
+         //Check the first LED on
          long stateTmp = 0;
+         for (unsigned int i=0;i<nChannels;i++) {
+            if (buf_string_[i*6+5]=='N') {
+               stateTmp = 1;
+               currentChannel_ = i;
+               break;
+            }
+         }
 
-         for (unsigned int i=0;i<channelLetters_.size();i++)
-         {
-            ReceiveOneLine();
-
-            if (! buf_string_.empty())
-               if (buf_string_[5]=='N') {
-                  stateTmp = 1;
+         //Maybe the LEDs are off. Can we still find a selected channel?
+         if (stateTmp == 0) {
+            for (unsigned int i=0;i<nChannels;i++) {
+               if (buf_string_[i*6+4]=='S') {
                   currentChannel_ = i;
                   break;
                }
+            }
          }
          state = stateTmp;
       }

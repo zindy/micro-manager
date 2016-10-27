@@ -42,6 +42,7 @@ enum TriggerType {OFF, RISING_EDGES, FALLING_EDGES, BOTH_EDGES, FOLLOW_PULSE};
 string TriggerLabels[] = {"Off","RisingEdges","FallingEdges","BothEdges","FollowPulse"};
 char TriggerCmd[] = {'Z', '+', '-', '*', 'X'};
 
+class PollingThread;
 
 class Controller : public CShutterBase<Controller>
 {

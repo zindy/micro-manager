@@ -102,6 +102,7 @@ private:
    std::string name_;
    bool busy_;
    int error_;
+   size_t nChannels_;
    MM::MMTime changedTime_;
 
    std::string port_;
@@ -166,3 +167,4 @@ class PollingThread: public MMDeviceThreadBase
 
 
 #endif // _PRECISEXCITE_H_
+

@@ -448,6 +448,9 @@ int Controller::OnChannelLabel(MM::PropertyBase* pProp, MM::ActionType eAct)
       for (unsigned int i=0;i<nChannels_;i++)
          if (channelLabels_[i].compare(currentChannelLabel_) == 0)
          {
+            std::ostringstream ss;
+            ss << "Controller::OnChannelLabel(" << i <<")";
+            this->LogMessage(ss.str().c_str(), true);
             currentChannel_ = i;
             break;
          }

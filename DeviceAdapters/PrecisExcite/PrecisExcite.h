@@ -86,13 +86,17 @@ public:
 protected:
    char currentChannelLetter_;
    string currentChannelLabel_;
+   bool hasUpdated_;
    long currentChannel_;
+   size_t nChannels_;
    vector<char> channelLetters_;
    vector<string> channelLabels_;
+   vector<unsigned int> channelIntensities_;
 
    int ReadChannelLabels();
    void GetIntensity(long& intensity, long index);
    void GetState(long &state);
+   void GetUpdate();
 
 private:
 
@@ -102,7 +106,6 @@ private:
    std::string name_;
    bool busy_;
    int error_;
-   size_t nChannels_;
    MM::MMTime changedTime_;
 
    std::string port_;

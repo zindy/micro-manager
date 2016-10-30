@@ -93,7 +93,8 @@ Controller::Controller(const char* name) :
    error_(0),
    changedTime_(0.0),
    nChannels_(0),
-   mThread_(0)
+   mThread_(0),
+   hasUpdated_(false)
 {
    assert(strlen(name) < (unsigned int) MM::MaxStrLength);
 
@@ -159,12 +160,15 @@ int Controller::Initialize()
    if (result != DEVICE_OK)
 	   return result;
 
+   channelIntensities_.reserve(nChannels_);
    GenerateChannelChooser();
    GeneratePropertyIntensity();
    GeneratePropertyState();
    GeneratePropertyTrigger();
    GeneratePropertyTriggerSequence();
-   GetState(state_);
+
+   GetUpdate();
+   //GetState(state_);
    
    mThread_ = new PollingThread(*this);
    mThread_->Start();
@@ -180,6 +184,51 @@ void Controller::ReadGreeting()
    do {
       ReceiveOneLine();
    } while (! buf_string_.empty());
+}
+
+void Controller::GetUpdate()
+{
+   this->LogMessage("Controller::GetUpdate()",true);
+
+   MMThreadGuard myLock(lock_);
+   {
+      Purge();
+      Send("CSS?");
+      do {
+         ReceiveOneLine();
+      } while (0 != buf_string_.compare(0,3,"CSS",0,3));
+
+      //Record intensities and first LED on
+      long stateTmp = 0;
+      for (unsigned int i=0;i<nChannels_;i++) {
+         //Read the intensity
+         channelIntensities_[i] = atol(buf_string_.substr(6+i*6,3).c_str());
+
+         //Check if LED is on
+         if (buf_string_[i*6+5]=='N' && stateTmp == 0) {
+            stateTmp = 1;
+            currentChannel_ = i;
+
+            std::ostringstream ss;
+            ss << "debug: Found channel " << channelLetters_[i];
+            ss << " is ON!";
+            LogMessage(ss.str().c_str(), true);
+         }
+      }
+
+      //Maybe the LEDs are off. Can we still find a selected channel?
+      if (stateTmp == 0) {
+         for (unsigned int i=0;i<nChannels_;i++) {
+            if (buf_string_[i*6+4]=='S') {
+               currentChannel_ = i;
+               break;
+            }
+         }
+      }
+
+      //record state
+      state_ = stateTmp;
+   }
 }
 
 int Controller::ReadChannelLabels()
@@ -357,14 +406,18 @@ int Controller::OnIntensity(MM::PropertyBase* pProp, MM::ActionType eAct, long i
    long intensity;
    if (eAct == MM::BeforeGet)
    {
-      GetIntensity(intensity,index);
+      //GetIntensity(intensity,index);
+      GetUpdate();
+      intensity = channelIntensities_[index];
       pProp->Set(intensity);
    }
    else if (eAct == MM::AfterSet)
    {
       pProp->Get(intensity);
       SetIntensity(intensity, index);
+      GetUpdate();
    }
+   hasUpdated_ = true;
    
 
    return HandleErrors();
@@ -375,22 +428,19 @@ int Controller::OnChannelLabel(MM::PropertyBase* pProp, MM::ActionType eAct)
 {
    if (eAct == MM::BeforeGet)
    {
-      GetState(state_);
-      if (state_ == 1) {
-         currentChannelLabel_ = channelLabels_[currentChannel_];
-      }
+      currentChannelLabel_ = channelLabels_[currentChannel_];
       pProp->Set(currentChannelLabel_.c_str());
    }
    else if (eAct == MM::AfterSet)
    {
-      GetState(state_);
       pProp->Get(currentChannelLabel_);
       for (unsigned int i=0;i<nChannels_;i++)
          if (channelLabels_[i].compare(currentChannelLabel_) == 0)
          {
             currentChannel_ = i;
-            SetState(state_);
+            break;
          }
+      Illuminate();
 
    }
 
@@ -403,7 +453,6 @@ int Controller::OnState(MM::PropertyBase* pProp, MM::ActionType eAct)
 {
    if (eAct == MM::BeforeGet)
    {
-      GetState(state_);
       pProp->Set(state_);
    }
    else if (eAct == MM::AfterSet)
@@ -412,6 +461,7 @@ int Controller::OnState(MM::PropertyBase* pProp, MM::ActionType eAct)
       SetState(state_);
    }
    
+   hasUpdated_ = true;
    return HandleErrors();
 }
 
@@ -574,46 +624,7 @@ void Controller::SetState(long state)
 void Controller::GetState(long &state)
 {
    this->LogMessage("Controller::GetState()",true);
-   if (triggerMode_ == OFF) {
-      MMThreadGuard myLock(lock_);
-      {
-         Purge();
-         Send("CSS?");
-         do {
-            ReceiveOneLine();
-         } while (0 != buf_string_.compare(0,3,"CSS",0,3));
-
-         //Check the first LED on
-         long stateTmp = 0;
-         for (unsigned int i=0;i<nChannels_;i++) {
-            if (buf_string_[i*6+5]=='N') {
-               stateTmp = 1;
-               currentChannel_ = i;
-
-               std::ostringstream ss;
-               ss << "debug: Found channel " << channelLetters_[i];
-               ss << " is ON!";
-               LogMessage(ss.str().c_str(), true);
-
-               break;
-            }
-         }
-
-         //Maybe the LEDs are off. Can we still find a selected channel?
-         if (stateTmp == 0) {
-            for (unsigned int i=0;i<nChannels_;i++) {
-               if (buf_string_[i*6+4]=='S') {
-                  currentChannel_ = i;
-                  break;
-               }
-            }
-         }
-         state = stateTmp;
-      }
-   }
-   else
-      state = state_;
-
+   state = state_;
 }
 
 int Controller::HandleErrors()
@@ -665,7 +676,8 @@ int Controller::SetOpen(bool open)
 
 int Controller::GetOpen(bool& open)
 {
-   this->LogMessage("Controller::GetOpen() ->",true);
+   this->LogMessage("Controller::GetOpen()",true);
+
    long state;
    GetState(state);
    if (state==1)
@@ -676,7 +688,7 @@ int Controller::GetOpen(bool& open)
       error_ = DEVICE_UNKNOWN_POSITION;
 
    std::ostringstream ss;
-   ss << "Controller::GetOpen() <- " << open << ((state==0)?" (closed)":" (open)");
+   ss << "Controller::GetOpen() sends back: " << open << ((state==0)?" (closed)":" (open)");
    this->LogMessage(ss.str().c_str(), true);
    return HandleErrors();
 }
@@ -706,14 +718,24 @@ int PollingThread::svc()
    long oldState;
    long oldChannel;
 
-   aController_.GetState(oldState);
+   aController_.GetUpdate();
    oldChannel = aController_.currentChannel_;
    while (!stop_)
    {
-      aController_.GetState(state);
-      if (state!=oldState)
+      //trying to catch changes generated from within MMStudio
+      //no need to fire back an event to MMStudio in that case
+      //FIXME Does not seem to work for state!
+      if (aController_.hasUpdated_) {
+         aController_.hasUpdated_ = false;
+         oldChannel = aController_.currentChannel_;
+         oldState = aController_.state_;
+         continue;
+      }
+
+      aController_.GetUpdate();
+      if (aController_.state_!=oldState)
       {
-         oldState = state;
+         oldState = aController_.state_;
          aController_.OnPropertyChanged(MM::g_Keyword_State, CDeviceUtils::ConvertToString(state));
       }
       if (aController_.currentChannel_ != oldChannel)

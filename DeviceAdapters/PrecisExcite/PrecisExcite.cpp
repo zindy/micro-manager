@@ -41,6 +41,7 @@
 // Controller
 const char* g_ControllerName = "PrecisExcite";
 const char* g_Keyword_Intensity = "Intensity";
+const char* g_Keyword_CssString = "CssString";
 const char* g_Keyword_Trigger = "Trigger";
 const char* g_Keyword_Trigger_Sequence = "TriggerSequence";
 const char* g_Keyword_ChannelLabel = "ChannelLabel";
@@ -167,6 +168,10 @@ int Controller::Initialize()
    GeneratePropertyTrigger();
    GeneratePropertyTriggerSequence();
 
+   //This one is for debugging
+   CPropertyAction* pAct = new CPropertyAction (this, &Controller::OnCssString);
+   CreateProperty(g_Keyword_CssString, "", MM::String, true, pAct);
+
    GetUpdate();
    //GetState(state_);
    
@@ -225,6 +230,12 @@ void Controller::GetUpdate()
             }
          }
       }
+
+      //the debug string
+      StripString(buf_string_);
+      cssString_ = buf_string_;
+
+      //SetProperty(g_Keyword_CssString, cssString_.c_str());
 
       //record state
       state_ = stateTmp;
@@ -507,6 +518,19 @@ int Controller::OnTriggerSequence(MM::PropertyBase* pProp, MM::ActionType eAct)
    return HandleErrors();
 }
 
+int Controller::OnCssString(MM::PropertyBase* pProp, MM::ActionType eAct)
+{
+   if (eAct == MM::BeforeGet)
+   {
+      pProp->Set(cssString_.c_str());
+   }
+   else if (eAct == MM::AfterSet)
+   {
+   }
+   return DEVICE_OK;
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Utility methods
@@ -744,6 +768,7 @@ int PollingThread::svc()
          aController_.OnPropertyChanged(g_Keyword_ChannelLabel, aController_.channelLabels_[aController_.currentChannel_].c_str());
       }
 
+      //aController_.OnPropertyChanged(g_Keyword_CssString, aController_.cssString_.c_str());
       CDeviceUtils::SleepMs(500);
    }
    return DEVICE_OK;

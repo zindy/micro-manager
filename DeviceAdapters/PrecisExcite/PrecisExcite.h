@@ -72,6 +72,7 @@ public:
    int OnState(MM::PropertyBase* pProp, MM::ActionType eAct);
    int OnTrigger(MM::PropertyBase* pProp, MM::ActionType eAct);
    int OnTriggerSequence(MM::PropertyBase* pProp, MM::ActionType eAct);
+   int OnCssString(MM::PropertyBase* pProp, MM::ActionType eAct);
 
 
 
@@ -92,6 +93,9 @@ protected:
    vector<char> channelLetters_;
    vector<string> channelLabels_;
    vector<unsigned int> channelIntensities_;
+
+   //Read only for debug
+   string cssString_;
 
    int ReadChannelLabels();
    void GetIntensity(long& intensity, long index);

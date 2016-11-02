@@ -127,6 +127,7 @@ namespace MM {
    const char* const g_Keyword_CoreAutoFocus    = "AutoFocus";
    const char* const g_Keyword_CoreAutoShutter  = "AutoShutter";
    const char* const g_Keyword_CoreChannelGroup = "ChannelGroup";
+   const char* const g_Keyword_CoreSmartListener   = "SmartListener";
    const char* const g_Keyword_CoreImageProcessor = "ImageProcessor";
    const char* const g_Keyword_CoreSLM          = "SLM";
    const char* const g_Keyword_CoreGalvo        = "Galvo";

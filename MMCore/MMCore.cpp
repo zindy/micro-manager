@@ -126,6 +126,7 @@ CMMCore::CMMCore() :
    pollingIntervalMs_(10),
    timeoutMs_(5000),
    autoShutter_(true),
+   smartListener_(false),
    callback_(0),
    configGroups_(0),
    properties_(0),
@@ -3319,6 +3320,29 @@ string CMMCore::getChannelGroup()
 {
    
    return channelGroup_;
+}
+
+/**
+ * Specifies the smart listener option to select the matching preset in a listening group.
+ */
+void CMMCore::setSmartListener(bool state)
+{
+   properties_->Set(MM::g_Keyword_CoreSmartListener, state ? "1" : "0");
+   smartListener_ = state;
+   {
+      MMThreadGuard scg(stateCacheLock_);
+      stateCache_.addSetting(PropertySetting(MM::g_Keyword_CoreDevice, MM::g_Keyword_CoreSmartListener, state ? "1" : "0"));
+   }
+   LOG_DEBUG(coreLogger_) << "Smart group option turned " << (state ? "on" : "off");
+}
+
+/**
+ * Returns the smart listener state.
+ */
+bool CMMCore::getSmartListener()
+{
+   
+   return smartListener_;
 }
 
 /**
@@ -6858,6 +6882,11 @@ void CMMCore::CreateCoreProperties()
    CoreProperty propGalvo;
    properties_->Add(MM::g_Keyword_CoreGalvo, propGalvo);
    properties_->AddAllowedValue(MM::g_Keyword_CoreGalvo, "");
+
+   CoreProperty propSmartListener("1", false);
+   propSmartListener.AddAllowedValue("0");
+   propSmartListener.AddAllowedValue("1");
+   properties_->Add(MM::g_Keyword_CoreSmartListener, propSmartListener);
 
    CoreProperty propChannelGroup;
    properties_->Add(MM::g_Keyword_CoreChannelGroup, propChannelGroup);

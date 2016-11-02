@@ -276,6 +276,8 @@ public:
    void setSLMDevice(const char* slmLabel) throw (CMMError);
    void setGalvoDevice(const char* galvoLabel) throw (CMMError);
    void setChannelGroup(const char* channelGroup) throw (CMMError);
+   void setSmartListener(bool state);
+   bool getSmartListener();
    ///@}
 
    /** \name System state cache.
@@ -657,6 +659,7 @@ private:
    long pollingIntervalMs_;
    long timeoutMs_;
    bool autoShutter_;
+   bool smartListener_;
    MM::Core* callback_;                 // core services for devices
    ConfigGroupCollection* configGroups_;
    CorePropertyCollection* properties_;

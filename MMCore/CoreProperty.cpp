@@ -160,6 +160,15 @@ void CorePropertyCollection::Execute(const char* propName, const char* value)
    {
       core_->setChannelGroup(value);
    }
+   else if (strcmp(propName, MM::g_Keyword_CoreSmartListener) == 0)
+   {
+      if (strcmp(value, "0") == 0)
+         core_->setSmartListener(false);
+      else if (strcmp(value, "1") == 0)
+         core_->setSmartListener(true);
+      else
+         assert(!"Invalid value for the core property.\n");
+   }
    // unknown property
    else
    {
@@ -240,6 +249,9 @@ void CorePropertyCollection::Refresh()
 
    // Channel group
    Set(MM::g_Keyword_CoreChannelGroup, core_->getChannelGroup().c_str());
+
+   // Smart listener 
+   Set(MM::g_Keyword_CoreSmartListener, core_->getSmartListener() ? "1" : "0");
 
 }
 

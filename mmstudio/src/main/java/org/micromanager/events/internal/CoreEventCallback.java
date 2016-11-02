@@ -23,6 +23,9 @@ package org.micromanager.events.internal;
 
 import mmcorej.CMMCore;
 import mmcorej.MMEventCallback;
+import mmcorej.Configuration;
+import mmcorej.StrVector;
+import mmcorej.PropertySetting;
 import org.micromanager.acquisition.internal.AcquisitionWrapperEngine;
 import org.micromanager.events.ConfigGroupChangedEvent;
 import org.micromanager.events.ExposureChangedEvent;
@@ -33,6 +36,7 @@ import org.micromanager.events.SLMExposureChangedEvent;
 import org.micromanager.events.StagePositionChangedEvent;
 import org.micromanager.events.SystemConfigurationLoadedEvent;
 import org.micromanager.events.XYStagePositionChangedEvent;
+import org.micromanager.internal.utils.ReportingUtils;
 
 /**
  * Callback to update Java layer when a change happens in the MMCore. This
@@ -73,8 +77,54 @@ public final class CoreEventCallback extends MMEventCallback {
    public void onPropertyChanged(String deviceName, String propName, String propValue) {
       core_.logMessage("Notification for Device: " + deviceName + " Property: " +
             propName + " changed to value: " + propValue, true);
+      
       DefaultEventManager.getInstance().post(
             new PropertyChangedEvent(deviceName, propName, propValue));
+
+      //Check groups with the the SmartListener property
+      StrVector groups = core_.getAvailableConfigGroups();
+      Configuration curCfg;
+
+      boolean isListening;
+      boolean isConcerned;
+      for (String group : groups) {
+         //core_.logMessage("Testing group: " + group + " " + deviceName + " "+ propName, true);
+         StrVector cfgs = core_.getAvailableConfigs(group);
+         try {
+            //Just need to check the first preset...
+            curCfg = core_.getConfigData(group, cfgs.get(0));
+            isListening = curCfg.isPropertyIncluded("Core","SmartListener"); // && core_.getSmartListener())
+            isConcerned = curCfg.isPropertyIncluded(deviceName, propName);
+
+            if  (isListening && isConcerned) { 
+               core_.logMessage("Config group: " + group+ " is listening and contains the device!", true);
+
+               //which preset / device contains the right property value?
+               for (int j=0;j<cfgs.size();j++) {
+                  curCfg = core_.getConfigData(group, cfgs.get(j));
+                  PropertySetting s = curCfg.getSetting(deviceName,propName);
+
+                  if (s.getPropertyValue().contentEquals(propValue) && 
+                        !cfgs.get(j).contentEquals(core_.getCurrentConfig(group))) {
+                     core_.logMessage("Will set config group: " + group+ " to preset "+cfgs.get(j), true);
+
+                     core_.waitForConfig(group, cfgs.get(j));
+                     onPropertiesChanged();
+                     //core_.setConfig(group, cfgs.get(j));
+
+                     DefaultEventManager.getInstance().post(
+                           new ConfigGroupChangedEvent(group, cfgs.get(j)));
+
+                     break;
+                  }
+               }
+
+            }
+         } catch (Exception e) {
+            ReportingUtils.showError(e);
+         }
+            
+      }
    }
 
    @Override

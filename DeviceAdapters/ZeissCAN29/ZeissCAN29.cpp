@@ -912,6 +912,9 @@ bool Shutter::Busy()
    if (ret != DEVICE_OK)  // This is bad and should not happen
       return false;
 
+   //Let's bodge this.
+   busy = false;
+
    return busy;
 }
 
@@ -1109,6 +1112,9 @@ bool Turret::Busy()
    int ret = GetBusy(*this, *GetCoreCallback(), devId_, busy);
    if (ret != DEVICE_OK)  // This is bad and should not happen
       return false;
+
+   //Let's bodge this.
+   busy = false;
 
    return busy;
 }

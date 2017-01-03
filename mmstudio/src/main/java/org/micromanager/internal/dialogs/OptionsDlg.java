@@ -56,6 +56,7 @@ import org.micromanager.internal.utils.UIMonitor;
 public final class OptionsDlg extends MMDialog {
    private static final long serialVersionUID = 1L;
    private static final String IS_DEBUG_LOG_ENABLED = "is debug logging enabled";
+   private static final String IS_SMART_LISTENER_ENABLED = "is smart listener enabled";
    private static final String SHOULD_CLOSE_ON_EXIT = "should close the entire program when the Micro-Manager plugin is closed";
 
    private final JTextField startupScriptFile_;
@@ -283,6 +284,19 @@ public final class OptionsDlg extends MMDialog {
          }
       });
 
+      final JCheckBox smartListenerEnabledCheckBox = new JCheckBox();
+      smartListenerEnabledCheckBox.setText("Enable the smart listener");
+      smartListenerEnabledCheckBox.setToolTipText("This choice enables the automatic selection of group items when one of the properties in the group is changed. To enable this behavior, you must additionally make the read-only SmartListener property part of the group");
+      smartListenerEnabledCheckBox.setSelected(getIsDebugLogEnabled());
+      smartListenerEnabledCheckBox.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(final ActionEvent e) {
+            boolean isEnabled = smartListenerEnabledCheckBox.isSelected();
+            setIsSmartListenerEnabled(isEnabled);
+            core_.setSmartListener(isEnabled);
+         }
+      });
+
       final JButton closeButton = new JButton();
       closeButton.setText("Close");
       closeButton.addActionListener(new ActionListener() {
@@ -337,6 +351,7 @@ public final class OptionsDlg extends MMDialog {
       super.add(syncExposureMainAndMDA, "wrap");
       super.add(hideMDAdisplay, "wrap");
       super.add(inspectorOnTop, "wrap");
+      super.add(smartListenerEnabledCheckBox, "wrap");
 
       super.add(new JSeparator(), "wrap");
 
@@ -383,6 +398,16 @@ public final class OptionsDlg extends MMDialog {
    public static void setIsDebugLogEnabled(boolean isEnabled) {
       DefaultUserProfile.getInstance().setBoolean(OptionsDlg.class,
             IS_DEBUG_LOG_ENABLED, isEnabled);
+   }
+
+   public static boolean getIsSmartListenerEnabled() {
+      return DefaultUserProfile.getInstance().getBoolean(OptionsDlg.class,
+            IS_SMART_LISTENER_ENABLED, false);
+   }
+
+   public static void setIsSmartListenerEnabled(boolean isEnabled) {
+      DefaultUserProfile.getInstance().setBoolean(OptionsDlg.class,
+            IS_SMART_LISTENER_ENABLED, isEnabled);
    }
 
    public static boolean getShouldCloseOnExit() {

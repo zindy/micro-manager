@@ -80,7 +80,7 @@ void CorePropertyCollection::Set(const char* propName, const char* value)
             ") to value \"" + ToString(value) + "\"",
             MMERR_InvalidCoreProperty);
 
-   if (!it->second.IsAllowed(value) || it->second.IsReadOnly())
+   if (!it->second.IsAllowed(value))
    {
       throw CMMError("Cannot set Core property " + ToString(propName) +
             " to invalid value \"" + ToString(value) + "\"",
@@ -89,7 +89,8 @@ void CorePropertyCollection::Set(const char* propName, const char* value)
 
    // execute property set command
    //
-   it->second.Set(value); // throws on failure
+   if (!it->second.IsReadOnly())
+      it->second.Set(value); // throws on failure
 }
 
 
@@ -251,7 +252,7 @@ void CorePropertyCollection::Refresh()
    Set(MM::g_Keyword_CoreChannelGroup, core_->getChannelGroup().c_str());
 
    // Smart listener 
-   Set(MM::g_Keyword_CoreSmartListener, core_->getSmartListener() ? "1" : "0");
+   // Set(MM::g_Keyword_CoreSmartListener, core_->getSmartListener() ? "1" : "0");
 
 }
 

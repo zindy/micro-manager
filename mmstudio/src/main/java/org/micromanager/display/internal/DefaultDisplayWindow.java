@@ -694,9 +694,13 @@ public final class DefaultDisplayWindow extends MMFrame implements DisplayWindow
    public void setDisplayedImageTo(Coords coords) {
       // Synchronized so we don't try to change the display while we also
       // change our UI (e.g. in shiftToCompositeImage).
-      synchronized(guiLock_) {
+      // HACK: this lock leads to a deadlock with the scrollbar panel update thread
+      // I have not fully investigated the issue, so removing this lock is likely
+      // to cause problemss elsewhere, but for now makes it possible to run 
+      // an MDA again.
+      //synchronized(guiLock_) {
          canvasQueue_.enqueue(coords);
-      }
+      //}
    }
 
    /**
@@ -1243,7 +1247,7 @@ public final class DefaultDisplayWindow extends MMFrame implements DisplayWindow
     * DisplaySettings will be saved under this key, and when this method is
     * called, the display will load any saved settings under this key and use
     * them as the new DisplaySettings.
-    * @param key New key to use when reading from/writing to the profile to
+    * @param newKey New key to use when reading from/writing to the profile to
     *        store DisplaySettings. If null, then revert to
     *        DEFAULT_SETTINGS_KEY.
     */

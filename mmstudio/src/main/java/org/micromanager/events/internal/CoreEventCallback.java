@@ -36,6 +36,7 @@ import org.micromanager.events.SLMExposureChangedEvent;
 import org.micromanager.events.StagePositionChangedEvent;
 import org.micromanager.events.SystemConfigurationLoadedEvent;
 import org.micromanager.events.XYStagePositionChangedEvent;
+//import org.micromanager.events.SmartListenerEvent;
 import org.micromanager.internal.utils.ReportingUtils;
 
 /**
@@ -93,7 +94,7 @@ public final class CoreEventCallback extends MMEventCallback {
          try {
             //Just need to check the first preset...
             curCfg = core_.getConfigData(group, cfgs.get(0));
-            isListening = curCfg.isPropertyIncluded("Core","SmartListener"); // && core_.getSmartListener())
+            isListening = true || curCfg.isPropertyIncluded("Core","SmartListener"); // && core_.getSmartListener())
             isConcerned = curCfg.isPropertyIncluded(deviceName, propName);
 
             if  (isListening && isConcerned) { 
@@ -112,8 +113,8 @@ public final class CoreEventCallback extends MMEventCallback {
                      onPropertiesChanged();
                      //core_.setConfig(group, cfgs.get(j));
 
-                     DefaultEventManager.getInstance().post(
-                           new ConfigGroupChangedEvent(group, cfgs.get(j)));
+                     //DefaultEventManager.getInstance().post(
+                     //      new ConfigGroupChangedEvent(group, cfgs.get(j)));
 
                      break;
                   }

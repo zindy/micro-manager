@@ -650,8 +650,23 @@ void Controller::SetState(long state)
 
 void Controller::GetState(long &state)
 {
-   this->LogMessage("Controller::GetState()",true);
-   state = state_;
+   if (triggerMode_ == OFF) {
+      Purge();
+      Send("C?");
+      long stateTmp = 0;
+
+      for (unsigned int i=0;i<channelLetters_.size();i++)
+      {
+         ReceiveOneLine();
+
+         if (! buf_string_.empty())
+            if (buf_string_[5]=='N')
+               stateTmp = 1;       
+      }
+      state = stateTmp;
+   }
+   else
+      state = state_;
 }
 
 int Controller::HandleErrors()

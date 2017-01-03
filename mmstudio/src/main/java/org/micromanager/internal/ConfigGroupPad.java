@@ -33,6 +33,7 @@ import javax.swing.table.TableColumn;
 import mmcorej.CMMCore;
 import mmcorej.Configuration;
 import mmcorej.StrVector;
+import mmcorej.PropertySetting;
 import org.micromanager.Studio;
 import org.micromanager.internal.dialogs.PresetEditor;
 import org.micromanager.internal.utils.DaytimeNighttime;
@@ -196,6 +197,7 @@ public final class ConfigGroupPad extends JScrollPane {
       @Override
       public void setValueAt(Object value, int row, int col) {
          StateItem item = groupList_.get(row);
+         ReportingUtils.logMessage(">>> Setting value "+value.toString()+" at row="+row);
          if (col == 1) {
             try {
                if (value != null && value.toString().length() > 0)
@@ -211,6 +213,7 @@ public final class ConfigGroupPad extends JScrollPane {
                      }
                      core_.waitForDevice(item.device);
                   } else {
+                     ReportingUtils.logMessage("| Setting config "+item.group+"("+value.toString()+")");
                      core_.setConfig(item.group, value.toString());
                      core_.waitForConfig(item.group, value.toString());
                   }
@@ -221,6 +224,18 @@ public final class ConfigGroupPad extends JScrollPane {
                            parentGUI_.app().getChannelExposureTime(
                              item.group, value.toString(), core_.getExposure()) );
                   }
+
+                  //Check groups with the the SmartListener property
+                  /*
+                  for (StateItem gitem : groupList_) {
+                     if (gitem == item)
+                        continue;
+
+                     Configuration gCfg = core_.getConfigData(gitem.group, gitem.config);
+                     if (gCfg.isPropertyIncluded("Core","SmartListener") && core_.getSmartListener())
+                        ReportingUtils.logMessage("|>"+gitem.group+" is smart!");
+                  }
+                  */
                   
                   refreshStatus();
                   table_.repaint();
@@ -335,12 +350,20 @@ public final class ConfigGroupPad extends JScrollPane {
                } else {
                   item.config = core_.getCurrentConfig(item.group);
                   // set descr to current situation so that Tooltips get updated
+                  ReportingUtils.logMessage("|>"+item.group+"("+item.config+")");
                   if (item.config.length() > 0) {
                      Configuration curCfg = core_.getConfigData(item.group, item.config);
                      item.descr = curCfg.getVerbose();
+
+                     for (int k=0; k<curCfg.size(); k++) {
+                        PropertySetting s = curCfg.getSetting(k);
+                        ReportingUtils.logMessage("| "+ s.getDeviceLabel() + ", " +
+                                     s.getPropertyName() + ", " + s.getPropertyValue());
+                     }
                   } else {
                      item.descr = "";
                   }
+                  //ReportingUtils.logMessage("|> "+item.descr);
                }
             }
             ReportingUtils.logMessage("Finished refreshing config group table");

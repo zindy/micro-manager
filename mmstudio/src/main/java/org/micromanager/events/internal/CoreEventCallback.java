@@ -97,7 +97,7 @@ public final class CoreEventCallback extends MMEventCallback {
             isListening = true || curCfg.isPropertyIncluded("Core","SmartListener"); // && core_.getSmartListener())
             isConcerned = curCfg.isPropertyIncluded(deviceName, propName);
 
-            if  (isListening && isConcerned) { 
+            if  (isListening && isConcerned && ignorePropertyChanges_ == false) { 
                core_.logMessage("Config group: " + group+ " is listening and contains the device!", true);
 
                //which preset / device contains the right property value?
@@ -111,10 +111,9 @@ public final class CoreEventCallback extends MMEventCallback {
 
                      core_.waitForConfig(group, cfgs.get(j));
                      onPropertiesChanged();
-                     //core_.setConfig(group, cfgs.get(j));
-
-                     //DefaultEventManager.getInstance().post(
-                     //      new ConfigGroupChangedEvent(group, cfgs.get(j)));
+                     ignorePropertyChanges_ = true;
+                     core_.setConfig(group, cfgs.get(j));
+                     ignorePropertyChanges_ = false;
 
                      break;
                   }

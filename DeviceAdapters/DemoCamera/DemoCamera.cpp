@@ -2618,6 +2618,12 @@ int CDemoFilterWheel::OnState(MM::PropertyBase* pProp, MM::ActionType eAct)
       }
 
       position_ = pos;
+      std::ostringstream os;
+      os << position_;
+      OnPropertyChanged("State", os.str().c_str());
+      char label[MM::MaxStrLength];
+      GetPositionLabel(position_, label);
+      OnPropertyChanged("Label", label);
    }
 
    return DEVICE_OK;

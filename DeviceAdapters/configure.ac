@@ -472,6 +472,7 @@ m4_define([device_adapter_dirs], [m4_strip([
    Sensicam
    SequenceTester
    SerialManager
+   SerialShutter
    SimpleAutofocus
    SimpleCam
    SpectralLMM5

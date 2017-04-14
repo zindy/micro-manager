@@ -141,6 +141,7 @@ SUBDIRS = \
 	Sapphire \
 	Scientifica \
 	SerialManager \
+	SerialShutter \
 	SimpleAutofocus \
 	SpectralLMM5 \
 	SutterLambda \

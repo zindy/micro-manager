@@ -238,15 +238,15 @@ int SerialShutter::SetOpen(bool open)
 
    if (line_.compare(g_DTRString)==0) {
       if (pos == 1)
-         status |= TIOCM_RTS;        // Set the RTS pin
-      else
-         status &= ~TIOCM_RTS;
-   }
-   else {
-      if (pos == 1)
          status |= TIOCM_DTR;        // Set the DTR pin
       else
          status &= ~TIOCM_DTR;
+   }
+   else {
+      if (pos == 1)
+         status |= TIOCM_RTS;        // Set the RTS pin
+      else
+         status &= ~TIOCM_RTS;
    }
 
    ret = ioctl(fd_, TIOCMSET, &status);

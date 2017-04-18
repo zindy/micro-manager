@@ -1,6 +1,6 @@
 ## Synopsis
 
-This device adapter makes it possible the use any USB serial -> TTL converters directly as TTL shutters.
+This device adapter makes it possible to use any USB serial -> TTL converters directly as TTL shutters.
 As long as the RTS or DTR line are exposed, no microcontroller is actually required to make this work.
 
 ## Wiring

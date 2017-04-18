@@ -166,7 +166,11 @@ int SerialShutter::Initialize()
    AddAllowedValue(MM::g_Keyword_State, "1");
 
 #ifdef WIN32
-   handle_ = CreateFileA( port_.c_str(),GENERIC_READ | GENERIC_WRITE, 
+   //Code lifted from SerialManager.cpp
+   std::string portPath = port_[0] == '\\' ?
+      port_ : "\\\\.\\" + port_;
+
+   handle_ = CreateFileA( portPath.c_str(),GENERIC_READ | GENERIC_WRITE, 
                         0, 
                         0, 
                         OPEN_EXISTING,

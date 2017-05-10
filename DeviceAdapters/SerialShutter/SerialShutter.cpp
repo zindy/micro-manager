@@ -227,10 +227,10 @@ int SerialShutter::SetOpen(bool open)
    DWORD dwFunc;
 
    if (line_.compare(g_DTRString)==0) {
-      dwFunc = (pos == 1)?SETRTS:CLRRTS;
-   }
-   else { //if (line == DTR) {
       dwFunc = (pos == 1)?SETDTR:CLRDTR;
+   }
+   else {
+      dwFunc = (pos == 1)?SETRTS:CLRRTS;
    }
 
    ret = EscapeCommFunction(handle_, dwFunc);
